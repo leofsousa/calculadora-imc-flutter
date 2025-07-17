@@ -1,3 +1,4 @@
+import 'package:calculador_imc_flutter/utils/class_imc.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,6 +16,7 @@ class _HomePageState extends State<HomePage> {
   double resultado = 0;
   String strResultado = "";
   bool mostrarResultado = false;
+  String classificao = "";
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +63,8 @@ class _HomePageState extends State<HomePage> {
                           controller: alturaController,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
-                            hintText: "Altura em Centímetros",
+                            focusedBorder: const OutlineInputBorder( borderSide: BorderSide(color: Colors.green)),
+                            hintText: "Altura em Centímetros Ex: 180",
                             prefixIcon: const Icon(Icons.height,
                                 color: Colors.lightGreen),
                             enabledBorder: OutlineInputBorder(
@@ -80,13 +83,14 @@ class _HomePageState extends State<HomePage> {
                           controller: pesoController,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
-                            hintText: "Peso em Kg",
+                            hintText: "Peso em Kg Ex: 60",
                             prefixIcon: const Icon(Icons.monitor_weight,
                                 color: Colors.lightGreen),
                             enabledBorder: OutlineInputBorder(
                                 borderSide:
-                                    const BorderSide(color: Colors.lightGreen),
+                                    const BorderSide(color: Colors.green),
                                 borderRadius: BorderRadius.circular(10)),
+                            focusedBorder: const OutlineInputBorder( borderSide: BorderSide(color: Colors.lightGreen,),)                          
                           ))),
                   const SizedBox(
                     width: 50,
@@ -104,6 +108,8 @@ class _HomePageState extends State<HomePage> {
                         child: TextButton(
                           onPressed: () {
                             setState(() {
+                              pesoController.clear();
+                              alturaController.clear();
                               peso = 0;
                               altura = 0;
                               mostrarResultado = false;
@@ -142,6 +148,7 @@ class _HomePageState extends State<HomePage> {
                                     alturaCm / 100; // converte cm para metros
                                 resultado = peso / (altura * altura);
                                 strResultado = resultado.toStringAsFixed(2);
+                                classificao = classificarIMC(resultado);
                                 mostrarResultado = true;
                               });
                             } else {}
@@ -179,12 +186,13 @@ class _HomePageState extends State<HomePage> {
             ),
             if (mostrarResultado)
               Padding(
-                padding: const EdgeInsets.only(bottom: 30),
+                padding: const EdgeInsets.only(
+                    top: 10, bottom: 100, left: 30, right: 30),
                 child: Text(
                   overflow: TextOverflow.visible,
-                  "Seu IMC é: $strResultado",
+                  "Seu IMC é: $strResultado, de acordo com a literatura, sua classificação é: $classificao",
                   style: const TextStyle(
-                    fontSize: 22,
+                    fontSize: 20,
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),

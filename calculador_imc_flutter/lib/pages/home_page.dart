@@ -93,8 +93,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Row(
                     children: [
-                      const Expanded(
-                        child: SizedBox(
+                      Expanded(
+                        flex: 1,
+                        child: Container(
                           width: 10,
                         ),
                       ),
@@ -103,20 +104,61 @@ class _HomePageState extends State<HomePage> {
                         child: TextButton(
                           onPressed: () {
                             setState(() {
-                              double peso =
-                                  double.tryParse(pesoController.text) ?? 0;
-                              double alturaCm =
-                                  double.tryParse(alturaController.text) ?? 0;
-                              altura =
-                                  alturaCm / 100; // converte cm para metros
-                              resultado = peso / (altura * altura);
-                              strResultado = resultado.toStringAsFixed(2);
-                              mostrarResultado = true;
+                              peso = 0;
+                              altura = 0;
+                              mostrarResultado = false;
                             });
+                            debugPrint("Resultado: $peso $altura");
                           },
                           style: const ButtonStyle(
-                              backgroundColor:
-                                  WidgetStatePropertyAll(Colors.lightGreen)),
+                            backgroundColor: WidgetStatePropertyAll(
+                                Color.fromARGB(255, 86, 122, 46)),
+                            shape: WidgetStatePropertyAll(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(20),
+                                        bottomLeft: Radius.circular(20)))),
+                          ),
+                          child: const Text(
+                            "Limpar",
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: TextButton(
+                          onPressed: () {
+                            if (pesoController.text.trim().isNotEmpty ||
+                                alturaController.text.trim().isNotEmpty) {
+                              setState(() {
+                                double peso =
+                                    double.tryParse(pesoController.text) ?? 0;
+                                double alturaCm =
+                                    double.tryParse(alturaController.text) ?? 0;
+                                altura =
+                                    alturaCm / 100; // converte cm para metros
+                                resultado = peso / (altura * altura);
+                                strResultado = resultado.toStringAsFixed(2);
+                                mostrarResultado = true;
+                              });
+                            } else {}
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text(
+                                        "Dados Inválidos, tente novamente!")));
+                          },
+                          style: const ButtonStyle(
+                            backgroundColor:
+                                WidgetStatePropertyAll(Colors.lightGreen),
+                            shape: WidgetStatePropertyAll(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(20),
+                                        bottomRight: Radius.circular(20)))),
+                          ),
                           child: const Text(
                             "Calcular",
                             style: TextStyle(

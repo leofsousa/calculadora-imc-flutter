@@ -6,8 +6,10 @@
     "configurations": [
         {
             "name": "calculador_imc_flutter",
+            "cwd": "calculador_imc_flutter",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "program": "lib/services/main.dart"
         },
         {
             "name": "calculador_imc_flutter (profile mode)",

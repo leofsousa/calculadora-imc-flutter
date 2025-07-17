@@ -8,8 +8,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  var pesoController = TextEditingController(text: "");
+  var alturaController = TextEditingController(text: "");
   double peso = 0;
   double altura = 0;
+  double resultado = 0;
+  String strResultado = "";
+  bool mostrarResultado = false;
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +58,7 @@ class _HomePageState extends State<HomePage> {
                       alignment: Alignment.center,
                       width: double.infinity,
                       child: TextField(
+                          controller: alturaController,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             hintText: "Altura em Centímetros",
@@ -71,6 +77,7 @@ class _HomePageState extends State<HomePage> {
                       alignment: Alignment.center,
                       width: double.infinity,
                       child: TextField(
+                          controller: pesoController,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             hintText: "Peso em Kg",
@@ -81,7 +88,9 @@ class _HomePageState extends State<HomePage> {
                                     const BorderSide(color: Colors.lightGreen),
                                 borderRadius: BorderRadius.circular(10)),
                           ))),
-                  const SizedBox(width: 50,),
+                  const SizedBox(
+                    width: 50,
+                  ),
                   Row(
                     children: [
                       const Expanded(
@@ -92,7 +101,19 @@ class _HomePageState extends State<HomePage> {
                       Expanded(
                         flex: 3,
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              double peso =
+                                  double.tryParse(pesoController.text) ?? 0;
+                              double alturaCm =
+                                  double.tryParse(alturaController.text) ?? 0;
+                              altura =
+                                  alturaCm / 100; // converte cm para metros
+                              resultado = peso / (altura * altura);
+                              strResultado = resultado.toStringAsFixed(2);
+                              mostrarResultado = true;
+                            });
+                          },
                           style: const ButtonStyle(
                               backgroundColor:
                                   WidgetStatePropertyAll(Colors.lightGreen)),
@@ -114,6 +135,19 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
+            if (mostrarResultado)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 30),
+                child: Text(
+                  overflow: TextOverflow.visible,
+                  "Seu IMC é: $strResultado",
+                  style: const TextStyle(
+                    fontSize: 22,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
           ],
         ),
       ),

@@ -137,7 +137,7 @@ class _HomePageState extends State<HomePage> {
                         flex: 3,
                         child: TextButton(
                           onPressed: () {
-                            if (pesoController.text.trim().isNotEmpty ||
+                            if (pesoController.text.trim().isNotEmpty &&
                                 alturaController.text.trim().isNotEmpty) {
                               setState(() {
                                 double peso =
@@ -151,11 +151,12 @@ class _HomePageState extends State<HomePage> {
                                 classificao = classificarIMC(resultado);
                                 mostrarResultado = true;
                               });
-                            } else {}
-                            ScaffoldMessenger.of(context).showSnackBar(
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                     content: Text(
                                         "Dados Inválidos, tente novamente!")));
+                            }
                           },
                           style: const ButtonStyle(
                             backgroundColor:

@@ -26,6 +26,7 @@ class _HomePageState extends State<HomePage> {
           title: const Text("Calculadora de IMC"),
         ),
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(
               height: 50,
@@ -63,7 +64,8 @@ class _HomePageState extends State<HomePage> {
                           controller: alturaController,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
-                            focusedBorder: const OutlineInputBorder( borderSide: BorderSide(color: Colors.green)),
+                            focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.green)),
                             hintText: "Altura em Centímetros Ex: 180",
                             prefixIcon: const Icon(Icons.height,
                                 color: Colors.lightGreen),
@@ -83,104 +85,100 @@ class _HomePageState extends State<HomePage> {
                           controller: pesoController,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
-                            hintText: "Peso em Kg Ex: 60",
-                            prefixIcon: const Icon(Icons.monitor_weight,
-                                color: Colors.lightGreen),
-                            enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: Colors.green),
-                                borderRadius: BorderRadius.circular(10)),
-                            focusedBorder: const OutlineInputBorder( borderSide: BorderSide(color: Colors.lightGreen,),)                          
-                          ))),
+                              hintText: "Peso em Kg Ex: 60",
+                              prefixIcon: const Icon(Icons.monitor_weight,
+                                  color: Colors.lightGreen),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      const BorderSide(color: Colors.green),
+                                  borderRadius: BorderRadius.circular(10)),
+                              focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.lightGreen,
+                                ),
+                              )))),
                   const SizedBox(
                     width: 50,
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          width: 10,
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: TextButton(
-                          onPressed: () {
-                            setState(() {
-                              pesoController.clear();
-                              alturaController.clear();
-                              peso = 0;
-                              altura = 0;
-                              mostrarResultado = false;
-                            });
-                            debugPrint("Resultado: $peso $altura");
-                          },
-                          style: const ButtonStyle(
-                            backgroundColor: WidgetStatePropertyAll(
-                                Color.fromARGB(255, 86, 122, 46)),
-                            shape: WidgetStatePropertyAll(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(20),
-                                        bottomLeft: Radius.circular(20)))),
-                          ),
-                          child: const Text(
-                            "Limpar",
-                            style: TextStyle(
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: TextButton(
-                          onPressed: () {
-                            if (pesoController.text.trim().isNotEmpty &&
-                                alturaController.text.trim().isNotEmpty) {
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20, left: 30, right: 30),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Expanded(
+                          flex: 3,
+                          child: TextButton(
+                            onPressed: () {
                               setState(() {
-                                double peso =
-                                    double.tryParse(pesoController.text) ?? 0;
-                                double alturaCm =
-                                    double.tryParse(alturaController.text) ?? 0;
-                                altura =
-                                    alturaCm / 100; // converte cm para metros
-                                resultado = peso / (altura * altura);
-                                strResultado = resultado.toStringAsFixed(2);
-                                classificao = classificarIMC(resultado);
-                                mostrarResultado = true;
+                                pesoController.clear();
+                                alturaController.clear();
+                                peso = 0;
+                                altura = 0;
+                                mostrarResultado = false;
                               });
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text(
-                                        "Dados Inválidos, tente novamente!")));
-                            }
-                          },
-                          style: const ButtonStyle(
-                            backgroundColor:
-                                WidgetStatePropertyAll(Colors.lightGreen),
-                            shape: WidgetStatePropertyAll(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                        topRight: Radius.circular(20),
-                                        bottomRight: Radius.circular(20)))),
-                          ),
-                          child: const Text(
-                            "Calcular",
-                            style: TextStyle(
-                              color: Colors.black,
+                              debugPrint("Resultado: $peso $altura");
+                            },
+                            style: const ButtonStyle(
+                              backgroundColor: WidgetStatePropertyAll(
+                                  Color.fromARGB(255, 86, 122, 46)),
+                              shape: WidgetStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(20),
+                                          bottomLeft: Radius.circular(20)))),
+                            ),
+                            child: const Text(
+                              "Limpar",
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      const Expanded(
-                        child: SizedBox(
-                          width: 10,
+                        Expanded(
+                          flex: 3,
+                          child: TextButton(
+                            onPressed: () {
+                              if (pesoController.text.trim().isNotEmpty &&
+                                  alturaController.text.trim().isNotEmpty) {
+                                setState(() {
+                                  double peso =
+                                      double.tryParse(pesoController.text) ?? 0;
+                                  double alturaCm =
+                                      double.tryParse(alturaController.text) ?? 0;
+                                  altura =
+                                      alturaCm / 100; // converte cm para metros
+                                  resultado = peso / (altura * altura);
+                                  strResultado = resultado.toStringAsFixed(2);
+                                  classificao = classificarIMC(resultado);
+                                  mostrarResultado = true;
+                                });
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text(
+                                            "Dados Inválidos, tente novamente!")));
+                              }
+                            },
+                            style: const ButtonStyle(
+                              backgroundColor:
+                                  WidgetStatePropertyAll(Colors.lightGreen),
+                              shape: WidgetStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(20),
+                                          bottomRight: Radius.circular(20)))),
+                            ),
+                            child: const Text(
+                              "Calcular",
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),

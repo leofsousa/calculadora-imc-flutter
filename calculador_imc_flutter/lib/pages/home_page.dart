@@ -101,7 +101,8 @@ class _HomePageState extends State<HomePage> {
                     width: 50,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 20, left: 30, right: 30),
+                    padding:
+                        const EdgeInsets.only(top: 20, left: 30, right: 30),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -145,7 +146,8 @@ class _HomePageState extends State<HomePage> {
                                   double peso =
                                       double.tryParse(pesoController.text) ?? 0;
                                   double alturaCm =
-                                      double.tryParse(alturaController.text) ?? 0;
+                                      double.tryParse(alturaController.text) ??
+                                          0;
                                   altura =
                                       alturaCm / 100; // converte cm para metros
                                   resultado = peso / (altura * altura);
@@ -184,16 +186,19 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             if (mostrarResultado)
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: 10, bottom: 100, left: 30, right: 30),
-                child: Text(
-                  overflow: TextOverflow.visible,
-                  "Seu IMC é: $strResultado, de acordo com a literatura, sua classificação é: $classificao",
-                  style: const TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      top: 10, bottom: 100, left: 30, right: 30),
+                  child: Text(
+                    overflow: TextOverflow.visible,
+                    "Seu IMC é: $strResultado, de acordo com a literatura, sua classificação é: $classificao",
+                    style: const TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),

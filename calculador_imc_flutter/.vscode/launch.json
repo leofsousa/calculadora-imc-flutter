@@ -9,7 +9,7 @@
             "cwd": "calculador_imc_flutter",
             "request": "launch",
             "type": "dart",
-            "program": "lib/services/main.dart"
+            "program": "lib/main.dart"
         },
         {
             "name": "calculador_imc_flutter (profile mode)",
